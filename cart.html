@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <!-- top -->
+      <div class="top-nav">
+        <p>Sign up and get 20% off to your first order. Sign Up Now</p>
+      </div>
+      <!-- nav bar -->
+      <div class="nav-bar">
+        <div class="logo">
+          <h1><a href="index.html">SHOP.CO</a></h1>
+        </div>
+
+        <!-- side nav -->
+        <div id="sidenav">
+          <a href="index.html"><h2>SHOP.CO</h2></a>
+          <ul>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">On Sale</a></li>
+            <li><a href="#newarrival">New Arrivals</a></li>
+            <li><a href="#">Brands</a></li>
+          </ul>
+        </div>
+
+        <!-- MENUBTN -->
+        <div id="menubtn">
+          <img src="menu.png" id="menu" alt="Menu Icon" />
+        </div>
+
+        <div class="nav-list">
+          <ul class="nav-ul">
+            <li class="shop">
+              <a href="">Shop</a>
+              <ion-icon
+                class="drop-down"
+                name="chevron-down-outline"
+              ></ion-icon>
+
+              <ul class="drop-down-list">
+                <li><a href="men.html">For Men</a></li>
+                <li><a href="women.html">For Women</a></li>
+              </ul>
+            </li>
+            <li><a href="">On Sale</a></li>
+            <li><a href="#newarrival">New Arrival</a></li>
+            <li><a href="">Brands</a></li>
+          </ul>
+        </div>
+        <div class="icons">
+          <div class="search-icon">
+            <ion-icon class="search" name="search-outline"></ion-icon>
+            <input type="search" placeholder="search for products..." />
+          </div>
+
+          <div class="ede1234">
+            <ion-icon class="ham-search" name="search-outline"></ion-icon>
+
+            <div class="cart-icon">
+              <ion-icon name="cart-outline"></ion-icon>
+              <span class="cart-counter">0</span>
+            </div>
+            <div class="user-icon">
+              <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div id="cart-container">
+        <h1>my cart</h1>
+      </div>
+      <div id="cart-display" class="cart-display"></div>
+    </main>
+
+    <!-- <div class="cart-container">
+      <h1>YOUR CART</h1>
+      <div id="shopping-cart">
+        <ul id="cart-items"></ul>
+        <p>Total: $<span id="cart-total">0.00</span></p>
+      </div>
+    </div> -->
+
+    <script defer src="script.js"></script>
+  </body>
+</html>
