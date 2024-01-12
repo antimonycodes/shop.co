@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let menuBtn = document.querySelector("#menubtn");
   let sideNav = document.querySelector("#sidenav");
-  let menu = document.querySelector("#menu");
+  let menuImage = document.querySelector("#menubtn img");
 
   menuBtn.onclick = function () {
     let computedStyle = window.getComputedStyle(sideNav);
@@ -9,12 +9,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (sideNavLeft === "0px") {
       sideNav.style.left = "-250px";
-      menu.src = "menu.png";
+      menuImage.src = "/icons8-hamburger-menu-30.png";
     } else {
       sideNav.style.left = "0px";
-      menu.src = "close.png";
+      menuImage.src = "/closee.png";
     }
   };
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the dropdown icon element
+  let dropDownIcon = document.querySelector(".drop-down");
+
+  // Add click event listener to toggle dropdown visibility
+  dropDownIcon.addEventListener("click", function () {
+    let dropdownList = dropDownIcon
+      .closest(".shop")
+      .querySelector(".drop-down-list");
+    dropdownList.style.display =
+      dropdownList.style.display === "block" ? "none" : "block";
+  });
 });
 
 // PRODUCT LIST
@@ -29,6 +43,8 @@ const displayProducts = async (category, containerId) => {
     // Convert the fetched data to JSON
     let products = await response.json();
     console.log(products);
+    // **Save products to local storage**
+    localStorage.setItem(`products_${category}`, JSON.stringify(products));
 
     // Get the container element where the products will be displayed
     const productDisplay = document.getElementById(containerId);
@@ -74,18 +90,18 @@ const displayProducts = async (category, containerId) => {
   }
 };
 
-// Call the function to display a list of products
-displayProducts("men's clothing", "na-display");
+// Call the function to display a list of new arrival products.
+displayProducts("electronics", "na-display");
 
-// Call the function to display a list of top-selling products in the 'jewelery' category
-displayProducts("women's clothing", "ts-display");
+// Call the function to display a list of top-selling products.
+displayProducts("jewelery", "ts-display");
 
 // To display product details
 let getProductDetails = async (id) => {
   // Fetch product details based on the provided product ID
-  var response = await fetch(`https://fakestoreapi.com/products/${id}`);
+  let response = await fetch(`https://fakestoreapi.com/products/${id}`);
   // Convert the fetched data to JSON
-  var product = await response.json();
+  let product = await response.json();
   // Return the product details
   return product;
 };
@@ -103,6 +119,12 @@ const generateRatingIcons = (rating) => {
   }
   return svgCode;
 };
+
+// let starsIcon = document.getElementById("stars");
+// function starss() {
+//   generateRatingIcons();
+// }
+// starss();
 
 let count = 0; // Counter variable, you can adjust the initial count as needed
 
@@ -162,32 +184,45 @@ function addToCart() {
     // Call displayCart to update the cart display
     displayCart();
   }
-  displayCart();
+  // displayCart();
 }
 
 function displayCart() {
   console.log("Displaying cart...");
   // Get the cart display element
-  const cartDisplay = document.getElementsByClassName("cart-display");
+  // const cartDisplay = document.getElementsByClassName("cart-display");
+  const cartDisplay = document.querySelector(".cart-container");
 
   // Check if the cart display element exists
   if (cartDisplay) {
     // Clear the previous content in the cart display
     cartDisplay.innerHTML = "";
 
+    const cartItems = JSON.parse(localStorage.getItem("cart"));
+
     // Loop through each item in the cart
-    cart.forEach((item) => {
+    cartItems.forEach((item) => {
       // Create a div element to represent a cart item
       const cartItemDiv = document.createElement("div");
-      cartItemDiv.classList.add("cart-item"); // Add a CSS class for styling
+      cartItemDiv.classList.add("cart-display"); // Add a CSS class for styling
 
       // Set the HTML content of the cart item div with item information
       cartItemDiv.innerHTML = `
-        <img src="${item.image}" alt="${item.title}">
-        <div class="cart-item-info">
-          <h3>${item.title}</h3>
-          <p>Quantity: ${item.quantity}</p>
+       
+
+        <div class="cart-items">
+        <div class="cart-items-img">
+              <img src="${item.image}" alt="${item.title}">
+        </div>
+        <div class="cart-items-info">
+           <h3>${item.title}</h3>
+          <h4>Quantity: ${item.quantity}</h4>
           <p>Price: $${item.price}</p>
+        </div>
+        </div>
+        <div class="summary">
+        <h2>Order Summary</h2>
+
         </div>
       `;
 
@@ -226,7 +261,7 @@ let displayProductDetails = async () => {
             <img src="${details.image}" alt="${details.title}" />
           </div>
         </div>
-        <div class="content-con">
+         <div class="content-con">
           <h1>${details.title}</h1>
           <h5>${generateRatingIcons(details.rating.rate)} ${
     details.rating.rate
@@ -284,7 +319,6 @@ async function similarDisplay() {
     console.log(similarProducts);
 
     similarProducts.forEach((product) => {
-      // Correct variable name here
       const similarProdDisplay = document.createElement("div");
       similarProdDisplay.classList.add("similar-display");
 
@@ -313,45 +347,191 @@ similarDisplay();
 const casualDisplay = document.getElementById("casual-products-display");
 // console.log(casualDisplay);
 
-async function getProducts() {
-  try {
-    let response = await fetch("https://fakestoreapi.com/products?limit=9");
-    let product = await response.json();
-    console.log(product);
+// const categoriesProducts = async () =>{
+//   let response =  await fetch("https://fakestoreapi")
 
-    product.forEach((product) => {
-      let CasualProductDiv = document.createElement("div");
-      CasualProductDiv.classList.add("casual-productD");
-      CasualProductDiv.innerHTML += `
-       <div class="images">
-      <img src="${product.image}"  />
-      </div>
-       <h2>${product.title}</h2>
-       <div class="rating">
-       <div class="stars">
-       <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-  <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-</svg>
-<svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-  <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-</svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-  <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-</svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-  <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-</svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-  <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-</svg>
-</div>
-<p> ${product.rating.rate}/<span>5<span></p>
-</div>
-<h3>${product.price}</h3>
+// // }
+// const categoriesContainer = document.getElementById("categories-con");
+// const displayProductsAndRedirect = async (category) => {
+//   try {
+//     // Fetch a list of products from the specified API endpoint
+//     let response = await fetch(
+//       `https://fakestoreapi.com/products/category/${category}`
+//     );
+//     console.log(response);
 
-      `;
-      casualDisplay.appendChild(CasualProductDiv);
-    });
-  } catch (err) {
-    console.log(err);
+//     // Convert the fetched data to JSON
+//     let products = await response.json();
+//     console.log(products);
+
+//     products.forEach((product) => {
+//       let CategoriesProductDiv = document.createElement("div");
+//       CategoriesProductDiv.classList.add("casual-productD");
+//       CategoriesProductDiv.innerHTML += `
+//        <div class="images">
+//       <img src="${product.image}"  />
+//       </div>
+//        <h2>${product.title}</h2>
+//        <div class="rating">
+//        <div class="stars">
+//        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+// </svg>
+// <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+// </svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+// </svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+// </svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+// </svg>
+// </div>
+// <p> ${product.rating.rate}/<span>5<span></p>
+// </div>
+// <h3>${product.price}</h3>
+
+//       `;
+//       categoriesContainer.appendChild(CategoriesProductDiv);
+//     });
+
+//     // Redirect to the products page with the selected category as a query parameter
+//     window.location.href = `category.html?category=${category}`;
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// };
+
+// // Add an event listener to the dropdown to trigger the function on change
+// document
+//   .getElementById("categoryDropdown")
+//   .addEventListener("change", (event) => {
+//     const selectedCategory = event.target.value;
+//     displayProductsAndRedirect(selectedCategory);
+//   });
+
+// }
+// const categoriesContainer = document.getElementById("categories-con");
+// const displayProductsAndRedirect = async (category) => {
+//   try {
+//     // Fetch a list of products from the specified API endpoint
+//     let response = await fetch(
+//       `https://fakestoreapi.com/products/category/${category}?limit=4`
+//     );
+
+//     // Convert the fetched data to JSON
+//     let products = await response.json();
+//     console.log(products);
+
+//     products.forEach((product) => {
+//       let CategoriesProductDiv = document.createElement("div");
+//       CategoriesProductDiv.classList.add("casual-productD");
+//       CategoriesProductDiv.innerHTML += `
+//         <div class="images">
+//           <img src="${product.image}"  />
+//         </div>
+//         <h2>${product.title}</h2>
+//         <div class="rating">
+//           <div class="stars">
+//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+//             </svg>
+//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+//             </svg>
+//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+//             </svg>
+//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+//             </svg>
+//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
+//             </svg>
+//           </div>
+//           <p>${product.rating.rate}/<span>5</span></p>
+//         </div>
+//         <h3>${product.price}</h3>
+//       `;
+//       categoriesContainer.appendChild(CategoriesProductDiv);
+//     });
+
+//     // Redirect to the products page with the selected category as a query parameter
+//     window.location.href = `category.html?category=${category}`;
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// };
+
+// // Add an event listener to the dropdown to trigger the function on change
+// document
+//   .getElementById("categoryDropdown")
+//   .addEventListener("change", (event) => {
+//     const selectedCategory = event.target.value;
+//     displayProductsAndRedirect(selectedCategory);
+//   });const categoriesContainer = document.getElementById("categories-con");
+
+document.addEventListener("DOMContentLoaded", function () {
+  let galleryContainer = document.getElementById("gallery-container");
+
+  if (galleryContainer) {
+    galleryContainer.addEventListener(
+      "wheel",
+      (evt) => {
+        evt.preventDefault();
+        galleryContainer.scrollLeft += evt.deltaX;
+        galleryContainer.style.scrollBehavior = "auto";
+      },
+      { passive: true }
+    );
+  } else {
+    console.error("Element with ID 'galleryContainer' not found.");
   }
-}
+});
 
-getProducts();
+document.addEventListener("DOMContentLoaded", function () {
+  let backBtn = document.getElementById("back-arrow");
+  let forwardBtn = document.getElementById("forward-arrow");
+  let galleryContainer = document.getElementById("gallery-container");
+
+  backBtn.addEventListener("click", () => {
+    galleryContainer.scrollLeft -= 500;
+  });
+
+  forwardBtn.addEventListener("click", () => {
+    galleryContainer.scrollLeft += 500;
+  });
+});
+
+// // Get the icon and container elements
+// var toggleIcon = document.getElementById("filter-menu");
+// var containerToToggle = document.getElementById("filter");
+// var casualCon = document.getElementById("casual-products");
+
+// // Add a click event listener to the icon
+// toggleIcon.addEventListener("click", function () {
+//   // Toggle the display property of the container
+//   if (containerToToggle.style.display === "none") {
+//     containerToToggle.style.display = "block";
+//   } else {
+//     containerToToggle.style.display = "none";
+//   }
+//   casualCon.style.display = "none";
+// });
+
+let toggleIcon = document.getElementById("filter-menu");
+let filterContainer = document.getElementById("filter");
+let casualContainer = document.getElementById("casual-products");
+
+// Add a click event listener to the toggle icon
+toggleIcon.addEventListener("click", function () {
+  // Toggle the display property of the filter container
+  if (filterContainer.style.display === "none") {
+    filterContainer.style.display = "block";
+  } else {
+    filterContainer.style.display = "none";
+  }
+
+  // Hide the casual-products container
+  casualContainer.style.display = "none";
+});

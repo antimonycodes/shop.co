@@ -27,9 +27,9 @@
                   name="chevron-down-outline"
                 ></ion-icon>
 
-                <ul class="drop-down-list">
-                  <li><a href="men.html">For Men</a></li>
-                  <li><a href="women.html">For Women</a></li>
+                <ul class="drop-down-list" id="categoryDropdown">
+                  <li><a href="category.html?category=men">For Men</a></li>
+                  <li><a href="category.html?category=women">For Women</a></li>
                 </ul>
               </li>
               <li><a href="">On Sale</a></li>
@@ -71,7 +71,7 @@
 
         <!-- MENUBTN -->
         <div id="menubtn">
-          <img src="menu.png" id="menu" alt="Menu Icon" />
+          <img src="/icons8-hamburger-menu-30.png" alt="" />
         </div>
       </nav>
 
@@ -198,7 +198,7 @@
         <div class="gallery" id="gallery-container">
           <div class="review-box" id="reviewBoxContainer">
             <div class="box">
-              <div class="star"></div>
+              <div class="star" id="stars"></div>
               <h4>Sarah M</h4>
               <p>
                 "I'm blown away by the quality and style of the clothes I
@@ -335,16 +335,6 @@
       </div>
     </footer>
 
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
-
-    <script src="script.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
