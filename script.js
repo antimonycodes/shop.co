@@ -201,7 +201,7 @@ function displayCart() {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
 
     // Loop through each item in the cart
-    cartItems.forEach((item) => {
+    cartItems.forEach((item, index) => {
       // Create a div element to represent a cart item
       const cartItemDiv = document.createElement("div");
       cartItemDiv.classList.add("cart-display"); // Add a CSS class for styling
@@ -219,11 +219,42 @@ function displayCart() {
           <h4>Quantity: ${item.quantity}</h4>
           <p>Price: $${item.price}</p>
         </div>
+        <div class="del-btn">
+        <img class="delete-btn" src="/Vector (6).png" alt="" onclick="removeCartItem(${index})">
+         <div class="counter">
+              <ion-icon class="minus" onclick="decrement()" name="remove-outline"></ion-icon>
+              <h1 class="count-el">0</h1>
+              <ion-icon  class="plus" onclick="increment()"  name="add-outline"></ion-icon>
+            </div>
+            </div>
         </div>
-        <div class="summary">
-        <h2>Order Summary</h2>
+    <div class="summary">
+  <h2>Order Summary</h2>
+  <div class="summary-item">
+    <span class="summary-label">Subtotal:</span>
+    <span class="summary-value">$<span id="subTotal">${calculateSub()}</span></span>
+  </div>
+  <div class="summary-item">
+    <span class="summary-label">Discount:</span>
+    <span class="summary-value">-$${(calculateSub() * 0.2).toFixed(2)}</span>
+  </div>
+  <div class="summary-item">
+    <span class="summary-label">Delivery fee:</span>
+    <span class="summary-value">$5.00</span>
+  </div>
+  <hr/>
+  <div class="summary-item">
+    <span class="summary-label">Total:</span>
+    <span class="summary-value">$<span id="totalCost">${calculateTotal()}</span></span>
+  </div>
+  <div class="promo">
+<input type="text" id="promo-code" placeholder="Add promo code">
+<button id="apply-btn">Apply</button>
 
-        </div>
+</div>
+</div>
+
+
       `;
 
       // Append the cart item div to the cart display
@@ -235,6 +266,46 @@ function displayCart() {
   // Call the displayCart function whenever you want to refresh the cart display
 }
 displayCart();
+
+// Function to remove a cart item by index
+function removeCartItem(index) {
+  let cartItems = JSON.parse(localStorage.getItem("cart"));
+
+  // Remove the item at the specified index
+  cartItems.splice(index, 1);
+
+  // Update local storage with the modified cart
+  localStorage.setItem("cart", JSON.stringify(cartItems));
+
+  // Refresh the cart display
+  displayCart();
+}
+
+// Call the displayCart function whenever you want to refresh the cart display
+displayCart();
+
+function calculateSub() {
+  const cartItems = JSON.parse(localStorage.getItem("cart"));
+
+  if (cartItems) {
+    return cartItems.reduce((subtotal, item) => {
+      return subtotal + item.price * item.quantity;
+    }, 0);
+  } else {
+    return 0; // Default to 0 if there are no items in the cart
+  }
+}
+function calculateTotal() {
+  // This is a basic example; you should adjust it based on your specific requirements
+  const subtotal = calculateSub();
+  const discount = 10; // Example discount percentage
+  const deliveryFee = 5; // Example delivery fee
+
+  const discountAmount = (subtotal * discount) / 100;
+  const totalCost = subtotal - discountAmount + deliveryFee;
+
+  return totalCost.toFixed(2); // Round to two decimal places
+}
 
 let details;
 
