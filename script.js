@@ -221,7 +221,7 @@ function displayCart() {
         </div>
         <div class="del-btn">
         <img class="delete-btn" src="/Vector (6).png" alt="" onclick="removeCartItem(${index})">
-         <div class="counter">
+         <div class="cart-page-counter">
               <ion-icon class="minus" onclick="decrement()" name="remove-outline"></ion-icon>
               <h1 class="count-el">0</h1>
               <ion-icon  class="plus" onclick="increment()"  name="add-outline"></ion-icon>
@@ -252,6 +252,7 @@ function displayCart() {
 <button id="apply-btn">Apply</button>
 
 </div>
+<button class="checkout">Go to checkout<ion-icon name="arrow-forward-outline"></ion-icon></button>
 </div>
 
 
