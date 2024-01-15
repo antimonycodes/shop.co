@@ -221,7 +221,7 @@ function displayCart() {
         </div>
         <div class="del-btn">
         <img class="delete-btn" src="/Vector (6).png" alt="" onclick="removeCartItem(${index})">
-         <div class="cart-page-counter">
+         <div class="counter">
               <ion-icon class="minus" onclick="decrement()" name="remove-outline"></ion-icon>
               <h1 class="count-el">0</h1>
               <ion-icon  class="plus" onclick="increment()"  name="add-outline"></ion-icon>
@@ -297,10 +297,9 @@ function calculateSub() {
   }
 }
 function calculateTotal() {
-  // This is a basic example; you should adjust it based on your specific requirements
   const subtotal = calculateSub();
-  const discount = 10; // Example discount percentage
-  const deliveryFee = 5; // Example delivery fee
+  const discount = 20;
+  const deliveryFee = 15;
 
   const discountAmount = (subtotal * discount) / 100;
   const totalCost = subtotal - discountAmount + deliveryFee;
@@ -414,135 +413,6 @@ async function similarDisplay() {
 
 similarDisplay();
 
-// casual products
-
-const casualDisplay = document.getElementById("casual-products-display");
-// console.log(casualDisplay);
-
-// const categoriesProducts = async () =>{
-//   let response =  await fetch("https://fakestoreapi")
-
-// // }
-// const categoriesContainer = document.getElementById("categories-con");
-// const displayProductsAndRedirect = async (category) => {
-//   try {
-//     // Fetch a list of products from the specified API endpoint
-//     let response = await fetch(
-//       `https://fakestoreapi.com/products/category/${category}`
-//     );
-//     console.log(response);
-
-//     // Convert the fetched data to JSON
-//     let products = await response.json();
-//     console.log(products);
-
-//     products.forEach((product) => {
-//       let CategoriesProductDiv = document.createElement("div");
-//       CategoriesProductDiv.classList.add("casual-productD");
-//       CategoriesProductDiv.innerHTML += `
-//        <div class="images">
-//       <img src="${product.image}"  />
-//       </div>
-//        <h2>${product.title}</h2>
-//        <div class="rating">
-//        <div class="stars">
-//        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-// </svg>
-// <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-// </svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-// </svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-// </svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//   <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-// </svg>
-// </div>
-// <p> ${product.rating.rate}/<span>5<span></p>
-// </div>
-// <h3>${product.price}</h3>
-
-//       `;
-//       categoriesContainer.appendChild(CategoriesProductDiv);
-//     });
-
-//     // Redirect to the products page with the selected category as a query parameter
-//     window.location.href = `category.html?category=${category}`;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//   }
-// };
-
-// // Add an event listener to the dropdown to trigger the function on change
-// document
-//   .getElementById("categoryDropdown")
-//   .addEventListener("change", (event) => {
-//     const selectedCategory = event.target.value;
-//     displayProductsAndRedirect(selectedCategory);
-//   });
-
-// }
-// const categoriesContainer = document.getElementById("categories-con");
-// const displayProductsAndRedirect = async (category) => {
-//   try {
-//     // Fetch a list of products from the specified API endpoint
-//     let response = await fetch(
-//       `https://fakestoreapi.com/products/category/${category}?limit=4`
-//     );
-
-//     // Convert the fetched data to JSON
-//     let products = await response.json();
-//     console.log(products);
-
-//     products.forEach((product) => {
-//       let CategoriesProductDiv = document.createElement("div");
-//       CategoriesProductDiv.classList.add("casual-productD");
-//       CategoriesProductDiv.innerHTML += `
-//         <div class="images">
-//           <img src="${product.image}"  />
-//         </div>
-//         <h2>${product.title}</h2>
-//         <div class="rating">
-//           <div class="stars">
-//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-//             </svg>
-//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-//             </svg>
-//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-//             </svg>
-//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-//             </svg>
-//             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
-//               <path d="M9.24494 0.255066L11.8641 5.89498L18.0374 6.64316L13.4829 10.877L14.679 16.9793L9.24494 13.9561L3.8109 16.9793L5.00697 10.877L0.452479 6.64316L6.62573 5.89498L9.24494 0.255066Z" fill="#FFC633"/>
-//             </svg>
-//           </div>
-//           <p>${product.rating.rate}/<span>5</span></p>
-//         </div>
-//         <h3>${product.price}</h3>
-//       `;
-//       categoriesContainer.appendChild(CategoriesProductDiv);
-//     });
-
-//     // Redirect to the products page with the selected category as a query parameter
-//     window.location.href = `category.html?category=${category}`;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//   }
-// };
-
-// // Add an event listener to the dropdown to trigger the function on change
-// document
-//   .getElementById("categoryDropdown")
-//   .addEventListener("change", (event) => {
-//     const selectedCategory = event.target.value;
-//     displayProductsAndRedirect(selectedCategory);
-//   });const categoriesContainer = document.getElementById("categories-con");
-
 document.addEventListener("DOMContentLoaded", function () {
   let galleryContainer = document.getElementById("gallery-container");
 
@@ -575,22 +445,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// // Get the icon and container elements
-// var toggleIcon = document.getElementById("filter-menu");
-// var containerToToggle = document.getElementById("filter");
-// var casualCon = document.getElementById("casual-products");
-
-// // Add a click event listener to the icon
-// toggleIcon.addEventListener("click", function () {
-//   // Toggle the display property of the container
-//   if (containerToToggle.style.display === "none") {
-//     containerToToggle.style.display = "block";
-//   } else {
-//     containerToToggle.style.display = "none";
-//   }
-//   casualCon.style.display = "none";
-// });
-
 let toggleIcon = document.getElementById("filter-menu");
 let filterContainer = document.getElementById("filter");
 let casualContainer = document.getElementById("casual-products");
@@ -607,3 +461,4 @@ toggleIcon.addEventListener("click", function () {
   // Hide the casual-products container
   casualContainer.style.display = "none";
 });
+
