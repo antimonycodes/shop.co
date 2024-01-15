@@ -160,7 +160,9 @@ function saveCartToLocalStorage() {
 }
 
 // Function to add the product to the cart
-let cart = [];
+// Initialize cart from local storage or as an empty array
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 let cartCounter = document.querySelector(".cart-counter");
 
 function addToCart() {
@@ -322,7 +324,7 @@ let displayProductDetails = async () => {
 
   // Set the HTML content of displayCon
   displayCon.innerHTML = `
-        <div class="images-con">
+        <div class="images-con" id="images-container">
           <div class="crop">
             <img src="${details.image}" alt="${details.title}" />
             <img src="${details.image}" alt="${details.title}" />
@@ -344,13 +346,13 @@ let displayProductDetails = async () => {
           <hr/>
           <p class="color">Select Colors</p>
           <div class="color-options">
-            <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
+            <svg id="svg0" xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
               <circle cx="18.5" cy="18.5" r="18.5" fill="#4F4631"/>
             </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
+            <svg id="svg1"  xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
               <circle cx="18.5" cy="18.5" r="18.5" fill="#314F4A"/>
             </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
+            <svg id="svgaqua" xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
               <circle cx="18.5" cy="18.5" r="18.5" fill="#31344F"/>
             </svg>
           </div>
@@ -373,6 +375,18 @@ let displayProductDetails = async () => {
           </div>
         </div>
       `;
+const colors = ["#4F4631", "#314F4A", "#31344F"];
+const imageContainer = document.getElementById("images-container");
+
+colors.forEach((color, index) => {
+  const colorElement = document.getElementById(`svg${index}`);
+  colorElement.addEventListener("click", () => {
+    imageContainer.style.backgroundColor = color;
+  });
+});
+
+
+
   console.log(details);
 };
 
@@ -462,3 +476,17 @@ toggleIcon.addEventListener("click", function () {
   casualContainer.style.display = "none";
 });
 
+// const firstColor = document.getElementById("svgred");
+// const secondColor = document.getElementById("svgblue");
+// const thirdColor = document.getElementById("svgaqua");
+
+// const imageContainer = document.getElementById("images-container");
+
+// firstColor.addEventListener(
+//   "click",
+//   () => {
+//     imageContainer.style.backgroundColor = "red";
+//     // statement.textContent = "The Color has been set to RED";
+//   },
+//   false
+// );

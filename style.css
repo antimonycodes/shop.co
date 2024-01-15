@@ -265,6 +265,9 @@ body {
 @media (max-width: 767px) {
   .hero {
     padding: 2%;
+    /* background: url(/Rectangle\ 5.png) no-repeat;
+    background-position: left;
+    background-size: cover; */
   }
   .hero h1 {
     font-size: 40px;
@@ -330,12 +333,22 @@ img:hover {
   transform: scale(1.1);
 }
 
+.mobile-background {
+  /* background-image: url(/Rectangle\ 5.png); */
+  background: url(/Rectangle\ 5.png) no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
 @media (max-width: 767px) {
   .hero {
-    background: url(/Rectangle\ 2.png) no-repeat;
-    background-position: left;
-    background-size: cover;
-    /* background-size: contain; */
+    background: none;
+  }
+  .mobile-background {
+    display: block;
   }
 }
 /* .hero .numbers .int-brands::after,
