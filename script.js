@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // PRODUCT LIST
 // Function to fetch and display products
+
 const displayProducts = async (category, containerId) => {
   try {
     // Fetch a list of products from the specified API endpoint
@@ -120,13 +121,7 @@ const generateRatingIcons = (rating) => {
   return svgCode;
 };
 
-// let starsIcon = document.getElementById("stars");
-// function starss() {
-//   generateRatingIcons();
-// }
-// starss();
-
-let count = 0; // Counter variable, you can adjust the initial count as needed
+let count = 1; // Counter variable, you can adjust the initial count as needed
 
 // Function to increment the counter
 function increment() {
@@ -136,7 +131,7 @@ function increment() {
 
 // Function to decrement the counter
 function decrement() {
-  if (count > 0) {
+  if (count > 1) {
     count--;
     updateCounter();
   }
@@ -194,6 +189,8 @@ function displayCart() {
   // Get the cart display element
   // const cartDisplay = document.getElementsByClassName("cart-display");
   const cartDisplay = document.querySelector(".cart-container");
+  const cartProductsCon = document.createElement("div");
+  cartProductsCon.classList.add("cart-products-con");
 
   // Check if the cart display element exists
   if (cartDisplay) {
@@ -225,44 +222,58 @@ function displayCart() {
         <img class="delete-btn" src="/Vector (6).png" alt="" onclick="removeCartItem(${index})">
          <div class="counter">
               <ion-icon class="minus" onclick="decrement()" name="remove-outline"></ion-icon>
-              <h1 class="count-el">0</h1>
+              <h1 class="count-el">1</h1>
               <ion-icon  class="plus" onclick="increment()"  name="add-outline"></ion-icon>
             </div>
             </div>
         </div>
-    <div class="summary">
-  <h2>Order Summary</h2>
-  <div class="summary-item">
-    <span class="summary-label">Subtotal:</span>
-    <span class="summary-value">$<span id="subTotal">${calculateSub()}</span></span>
-  </div>
-  <div class="summary-item">
-    <span class="summary-label">Discount:</span>
-    <span class="summary-value">-$${(calculateSub() * 0.2).toFixed(2)}</span>
-  </div>
-  <div class="summary-item">
-    <span class="summary-label">Delivery fee:</span>
-    <span class="summary-value">$5.00</span>
-  </div>
-  <hr/>
-  <div class="summary-item">
-    <span class="summary-label">Total:</span>
-    <span class="summary-value">$<span id="totalCost">${calculateTotal()}</span></span>
-  </div>
-  <div class="promo">
-<input type="text" id="promo-code" placeholder="Add promo code">
-<button id="apply-btn">Apply</button>
-
-</div>
-<button class="checkout">Go to checkout<ion-icon name="arrow-forward-outline"></ion-icon></button>
-</div>
-
-
+    
       `;
 
       // Append the cart item div to the cart display
-      cartDisplay.appendChild(cartItemDiv);
+      // cartDisplay.appendChild(cartItemDiv);
+      cartDisplay.appendChild(cartProductsCon);
+      cartProductsCon.appendChild(cartItemDiv);
     });
+    // Calculate summary after the loop
+    const subtotal = calculateSub();
+
+    // Render summary section
+    const summaryDiv = document.createElement("div");
+    summaryDiv.classList.add("summary");
+
+    summaryDiv.innerHTML = `
+                    <h2>Order Summary</h2>
+                    <div class="summary-item">
+                        <span class="summary-label">Subtotal:</span>
+                        <span class="summary-value">$${subtotal.toFixed(
+                          2
+                        )}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Discount:</span>
+                        <span class="summary-value">-$${(
+                          subtotal * 0.2
+                        ).toFixed(2)}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Delivery fee:</span>
+                        <span class="summary-value">$15.00</span>
+                    </div>
+                    <hr/>
+                    <div class="summary-item">
+                        <span class="summary-label">Total:</span>
+                        <span class="summary-value">$${calculateTotal()}</span>
+                    </div>
+                    <div class="promo">
+                        <input type="text" id="promo-code" placeholder="Add promo code">
+                        <button id="apply-btn">Apply</button>
+                    </div>
+                    <button class="checkout">Go to checkout<ion-icon name="arrow-forward-outline"></ion-icon></button>
+                `;
+
+    // Append the summary div to the cart display
+    cartDisplay.appendChild(summaryDiv);
   } else {
     console.error("Cart display element not found");
   }
@@ -375,17 +386,15 @@ let displayProductDetails = async () => {
           </div>
         </div>
       `;
-const colors = ["#4F4631", "#314F4A", "#31344F"];
-const imageContainer = document.getElementById("images-container");
+  const colors = ["#4F4631", "#314F4A", "#31344F"];
+  const imageContainer = document.getElementById("images-container");
 
-colors.forEach((color, index) => {
-  const colorElement = document.getElementById(`svg${index}`);
-  colorElement.addEventListener("click", () => {
-    imageContainer.style.backgroundColor = color;
+  colors.forEach((color, index) => {
+    const colorElement = document.getElementById(`svg${index}`);
+    colorElement.addEventListener("click", () => {
+      imageContainer.style.backgroundColor = color;
+    });
   });
-});
-
-
 
   console.log(details);
 };
