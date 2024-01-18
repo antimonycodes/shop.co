@@ -157,8 +157,6 @@ const categoryProducts = async (category, containerId) => {
       // Append the product div to the container
       productDisplay.appendChild(productDiv);
     });
-
-
   } catch (error) {
     console.error("Error fetching data:", error);
   }

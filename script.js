@@ -145,7 +145,9 @@ function updateCounter() {
 function updateCartCounter() {
   const cartCounter = document.querySelector(".cart-counter");
   if (cartCounter) {
-    cartCounter.innerText = cart.length;
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const uniqueItemCount = cartItems.length;
+    cartCounter.innerText = uniqueItemCount;
   }
 }
 
@@ -183,6 +185,10 @@ function addToCart() {
   }
   // displayCart();
 }
+document.addEventListener("DOMContentLoaded", function () {
+  // Call updateCartCounter when the page has finished loading
+  updateCartCounter();
+});
 
 function displayCart() {
   console.log("Displaying cart...");
@@ -222,7 +228,7 @@ function displayCart() {
         <img class="delete-btn" src="/Vector (6).png" alt="" onclick="removeCartItem(${index})">
          <div class="counter">
               <ion-icon class="minus" onclick="decrement()" name="remove-outline"></ion-icon>
-              <h1 class="count-el">1</h1>
+              <h1 class="count-el">${item.quantity}</h1>
               <ion-icon  class="plus" onclick="increment()"  name="add-outline"></ion-icon>
             </div>
             </div>

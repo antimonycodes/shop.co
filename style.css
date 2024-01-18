@@ -335,8 +335,8 @@ img:hover {
   transform: scale(1.1);
 }
 
-.mobile-background {
-  /* background-image: url(/Rectangle\ 5.png); */
+/* .mobile-background {
+  
   background: url(/Rectangle\ 5.png) no-repeat;
   background-position: center;
   background-size: cover;
@@ -356,7 +356,7 @@ background: rgb(242,240,241);
     padding: 0;
     margin: 0;
   }
-}
+} */
 /* .hero .numbers .int-brands::after,
 .hero .numbers .products-no::after {
   position: absolute;
@@ -460,13 +460,17 @@ background: rgb(242,240,241);
   width: 100%;
 }
 .product-image {
-  width: 295px;
+  max-width: 295px;
   height: 298px;
   border-radius: 20px;
+  background: grey;
+  margin-top: 1rem;
 }
 .product-image img {
   width: 80%;
   height: 90%;
+  /* object-fit: cover;
+  object-position: center; */
 }
 
 .new-arrival h3,
@@ -831,6 +835,7 @@ footer ul li a {
 }
 
 .images-con img {
+  max-width: 100%;
   object-fit: contain;
   object-position: center;
 }
@@ -2036,7 +2041,9 @@ footer ul li a {
 @media (max-width: 1035px) {
   .cart-container {
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
+
 }
 /* .cart-display {
   display: flex;
